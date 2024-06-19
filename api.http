@@ -7,7 +7,7 @@ POST http://localhost:3000/events
 Content-Type: application/json
 
 {
-  "name": "Concerto",
+  "name": "Concerto de Rock",
   "descriprtion": "Um concerto de rock com várias bandas famosas.",
   "date": "2024-07-20T19:30:00Z",
   "price": 150
@@ -32,3 +32,26 @@ Content-Type: application/json
 
 ###   
 DELETE  http://localhost:3000/events/{{eventId}}
+
+###
+GET http://localhost:3000/events/{{eventId}}/spots
+
+###
+# @name createSpot
+POST http://localhost:3000/events/{{eventId}}/spots
+Content-Type: application/json
+
+{
+  "name": "A1"
+}
+
+###
+@spotName = {{ createSpot.response.body.name }}
+POST http://localhost:3000/events/{{eventId}}/reserve
+Content-Type: application/json
+
+{
+  "spots": ["{{ spotName }}"],
+  "ticket_kind": "full",
+  "email": "test@test.com"
+}
